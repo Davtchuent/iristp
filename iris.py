@@ -26,9 +26,17 @@ st.set_page_config(
 
 @st.cache_data
 def load_data():
-    """Charge et prépare les données Iris"""
-    df = pd.read_csv('iris.csv', sep=';')
-    df = df.rename(columns={'Species': 'species'})
+    # Utilisez le chemin relatif correct
+    data_path = 'iris.csv'  # ou './iris.csv'
+    
+    # Vérifiez si le fichier existe
+    if not os.path.exists(data_path):
+        st.error(f"Fichier non trouvé : {data_path}")
+        st.info("Vérifiez que le fichier est bien dans le même répertoire que iris.py")
+        return None
+    
+    # Chargez les données
+    df = pd.read_csv(data_path, sep=';')
     return df
 
 def linear_regression(x, y):
